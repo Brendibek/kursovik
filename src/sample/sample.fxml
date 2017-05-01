@@ -1,8 +1,31 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="sample.Controller">
+    <VBox fx:id="menu" layoutX="591" layoutY="413">
+        <Button fx:id="daltonBtn" prefHeight="40" prefWidth="300" text="Тест на дальтонізм" onAction="#startDaltonTest">
+             <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+             </VBox.margin>
+        </Button>
+        <Button fx:id="colorBtn" prefHeight="40" prefWidth="300" text="Тест на чутливість до кольору" onAction="#startColorTest">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+        <Button fx:id="trainingBtn" prefHeight="40" prefWidth="300" text="Розминка для очей" onAction="#startTraining">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+        <Button fx:id="exitBtn" prefHeight="40" prefWidth="300" text="Вихід" onAction="#exit">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
+</AnchorPane>
