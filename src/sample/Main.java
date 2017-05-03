@@ -18,7 +18,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.setResizable(false); //disable resizable Window
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH); //fullScreenMode disable esc
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
 

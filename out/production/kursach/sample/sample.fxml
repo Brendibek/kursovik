@@ -3,44 +3,29 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller" prefWidth="900" prefHeight="600">
+<AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <VBox fx:id="menu" layoutX="585.0" layoutY="405.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
-        <Button fx:id="daltonBtn" focusTraversable="false" onAction="#startDaltonTest" prefHeight="40" prefWidth="300" text="Тест на дальтонізм">
+        <Button fx:id="daltonBtn" focusTraversable="false" onAction="#startDaltonTest" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на дальтонізм">
              <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
              </VBox.margin>
         </Button>
-        <Button fx:id="colorBtn" focusTraversable="false" onAction="#startColorTest" prefHeight="40" prefWidth="300" text="Тест на чутливість до кольору">
+        <Button fx:id="colorBtn" focusTraversable="false" onAction="#startColorTest" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на чутливість до кольору">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Button>
-        <Button fx:id="trainingBtn" focusTraversable="false" onAction="#startTraining" prefHeight="40" prefWidth="300" text="Розминка для очей">
+        <Button fx:id="trainingBtn" focusTraversable="false" onAction="#startTraining" prefHeight="40" prefWidth="300" styleClass="button_my" text="Розминка для очей">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Button>
-        <Button fx:id="exitBtn" focusTraversable="false" onAction="#exit" prefHeight="40" prefWidth="300" text="Вихід">
+        <Button fx:id="exitBtn" focusTraversable="false" onAction="#exit" prefHeight="40" prefWidth="300" styleClass="button_my" text="Вихід">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Button>
     </VBox>
-    <Pane AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" onMouseDragged="#moveWin" onMousePressed="#downWin" onMouseReleased="#upWin" prefHeight="30.0" prefWidth="900.0" styleClass="background_wp" />
-    <HBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="0.0" prefHeight="30" prefWidth="57">
-        <Button fx:id="trey" focusTraversable="false" mnemonicParsing="false" onAction="#trey" prefHeight="24" prefWidth="24" styleClass="button_wp" text="_">
-            <HBox.margin>
-                <Insets bottom="3.0" right="3.0" top="3.0" />
-            </HBox.margin>
-        </Button>
-        <Button focusTraversable="false" mnemonicParsing="false" onAction="#exit" prefHeight="24" prefWidth="24" styleClass="button_wp" text="X">
-            <HBox.margin>
-                <Insets bottom="3.0" right="3.0" top="3.0" />
-            </HBox.margin>
-        </Button>
-    </HBox>
 </AnchorPane>
