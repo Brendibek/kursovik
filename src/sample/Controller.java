@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
@@ -14,7 +15,7 @@ public class Controller {
     public Button colorBtn;
     public Button trainingBtn;
     public Button exitBtn;
-    public Pane winPanel;
+    public Button trey;
 
     public void startDaltonTest(){
 
@@ -25,10 +26,9 @@ public class Controller {
     }
 
     public void startTraining(){
-        //Values.stage.setWidth(1280);
-        //Values.stage.setHeight(720);
         Values.stage.setFullScreen(true);
-        //menu.setVisible(false);
+        menu.setVisible(false);
+        trey.setDisable(true);
     }
 
     public void trey() {

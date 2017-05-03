@@ -7,13 +7,18 @@
 }
 
 .button_wp{
-	-fx-background-color: #777777;
-	-fx-background-radius: 12 3 12 3;
+	-fx-background-color: #888888;
+	-fx-background-radius: 0 0 0 0;
 	-fx-font-family: sans-serif;
 	-fx-font-weight:900;
     -fx-font-size: 8pt;
 }
 
 .button_wp:hover{
-	-fx-background-color: #888888;
+	-fx-background-color: #999999;
+}
+
+.button_wp:pressed{
+    -fx-padding: 1 0 0 0;
+	-fx-background-color: #777777;
 }
