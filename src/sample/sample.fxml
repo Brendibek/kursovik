@@ -28,4 +28,8 @@
             </VBox.margin>
         </Button>
     </VBox>
+
+    <Button visible="false" fx:id="backToMenuBtn" prefHeight="40" prefWidth="300" text="Вихід в меню" onAction="#backToMenu" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" styleClass="button_my">
+
+    </Button>
 </AnchorPane>
