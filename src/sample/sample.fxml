@@ -48,13 +48,13 @@
         </Label>
 
         <HBox alignment="CENTER">
-            <Slider orientation="HORIZONTAL" fx:id="colorTestCountSlider" snapToTicks="true" blockIncrement="5" showTickLabels="true" showTickMarks="true" majorTickUnit="10" minorTickCount="9" HBox.hgrow="ALWAYS" prefHeight="40" min="0" max="50">
+            <Slider orientation="HORIZONTAL" onMouseDragged="#test" fx:id="colorTestCountSlider" snapToTicks="true" blockIncrement="5" showTickLabels="true" showTickMarks="true" majorTickUnit="10" minorTickCount="9" HBox.hgrow="ALWAYS" prefHeight="40" min="0" max="50">
                 <HBox.margin>
                     <Insets bottom="3.0" left="3.0" right="3.0"/>
                 </HBox.margin>
             </Slider>
 
-            <Label fx:id="colorTestCountLabel" prefHeight="40" text="${colorTestCountSlider.value}">
+            <Label fx:id="colorTestCountLabel" prefHeight="40" prefWidth="20">
                 <HBox.margin>
                     <Insets bottom="3.0" left="3.0" right="3.0"/>
                 </HBox.margin>

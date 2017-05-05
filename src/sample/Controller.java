@@ -61,4 +61,9 @@ public class Controller {
     public void backToMenu(){
         fullScreenSwitch();
     }
+
+    public void test(){
+        int sliderValue = (int)Math.round(colorTestCountSlider.getValue());
+        colorTestCountLabel.setText(String.valueOf(sliderValue));
+    }
 }
