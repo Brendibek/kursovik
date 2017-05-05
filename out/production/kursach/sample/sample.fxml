@@ -41,25 +41,23 @@
     </Button>
 
     <VBox visible="false" fx:id="colorTestMenu" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <Button fx:id="colorTestBackToMenu" text="Повернутися до меню" styleClass="button_my" prefHeight="40" onAction="#hideColorTestSettings">
+            <VBox.margin>
+                <Insets left="3.0" right="3.0" top="3.0" bottom="3"/>
+            </VBox.margin>
+        </Button>
+
         <Label text="Кількість питань">
             <VBox.margin>
                 <Insets left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Label>
 
-        <HBox alignment="CENTER">
-            <Slider orientation="HORIZONTAL" onMouseDragged="#test" fx:id="colorTestCountSlider" snapToTicks="true" blockIncrement="5" showTickLabels="true" showTickMarks="true" majorTickUnit="10" minorTickCount="9" HBox.hgrow="ALWAYS" prefHeight="40" min="0" max="50">
-                <HBox.margin>
-                    <Insets bottom="3.0" left="3.0" right="3.0"/>
-                </HBox.margin>
-            </Slider>
-
-            <Label fx:id="colorTestCountLabel" prefHeight="40" prefWidth="20">
-                <HBox.margin>
-                    <Insets bottom="3.0" left="3.0" right="3.0"/>
-                </HBox.margin>
-            </Label>
-        </HBox>
+        <Slider focusTraversable="false" orientation="HORIZONTAL" fx:id="colorTestCountSlider" snapToTicks="true" blockIncrement="5" showTickLabels="true" showTickMarks="true" majorTickUnit="5" minorTickCount="4" prefHeight="40" min="0" max="50">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0"/>
+            </VBox.margin>
+        </Slider>
 
         <Button fx:id="startColorTestBtn" text="Почати тест " styleClass="button_my" prefHeight="40" onAction="#startColorTest">
             <VBox.margin>

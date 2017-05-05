@@ -19,9 +19,8 @@ public class Controller {
     public VBox colorTestMenu;
 
     public Slider colorTestCountSlider;
-    public Label colorTestCountLabel;
-
     public Button startColorTestBtn;
+    public Button colorTestBackToMenu;
 
     public void startDaltonTest(){
         fullScreenSwitch();
@@ -30,6 +29,11 @@ public class Controller {
     public void showColorTestSettings(){
         menu.setVisible(false);
         colorTestMenu.setVisible(true);
+    }
+
+    public void hideColorTestSettings(){
+        menu.setVisible(true);
+        colorTestMenu.setVisible(false);
     }
 
     public void startColorTest(){
@@ -60,10 +64,5 @@ public class Controller {
 
     public void backToMenu(){
         fullScreenSwitch();
-    }
-
-    public void test(){
-        int sliderValue = (int)Math.round(colorTestCountSlider.getValue());
-        colorTestCountLabel.setText(String.valueOf(sliderValue));
     }
 }
