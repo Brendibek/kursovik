@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import resource.Values;
 
@@ -14,13 +16,24 @@ public class Controller {
 
     public Button backToMenuBtn;
 
-    private boolean fullScreen = false;
+    public VBox colorTestMenu;
+
+    public Slider colorTestCountSlider;
+    public Label colorTestCountLabel;
+
+    public Button startColorTestBtn;
 
     public void startDaltonTest(){
         fullScreenSwitch();
     }
 
+    public void showColorTestSettings(){
+        menu.setVisible(false);
+        colorTestMenu.setVisible(true);
+    }
+
     public void startColorTest(){
+        colorTestMenu.setVisible(false);
         fullScreenSwitch();
     }
 
@@ -34,7 +47,7 @@ public class Controller {
 
 
     public void fullScreenSwitch(){
-        if(fullScreen){
+        if(Values.stage.isFullScreen()){
             Values.stage.setFullScreen(false);
             menu.setVisible(true);
             backToMenuBtn.setVisible(false);
@@ -43,8 +56,6 @@ public class Controller {
             menu.setVisible(false);
             backToMenuBtn.setVisible(true);
         }
-
-        fullScreen = !fullScreen;
     }
 
     public void backToMenu(){
