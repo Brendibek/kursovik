@@ -1,8 +1,6 @@
 package sample;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import resource.Values;
 
@@ -21,6 +19,8 @@ public class Controller {
     public Slider colorTestCountSlider;
     public Button startColorTestBtn;
     public Button colorTestBackToMenu;
+    public CheckBox colorCheck;
+    public ColorPicker colorPicker;
 
     public void startDaltonTest(){
         fullScreenSwitch();
@@ -48,7 +48,6 @@ public class Controller {
     public void exit(){
         System.exit(0);
     }
-
 
     public void fullScreenSwitch(){
         if(Values.stage.isFullScreen()){
