@@ -1,11 +1,15 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import resource.Values;
 
+import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,7 +35,7 @@ public class Controller {
 
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
-    public int trainingImageClickCount = 0;
+    public int trainingImageClickCount, trainingImagePcCount;
     public void startDaltonTest(){
         fullScreenSwitch();
     }
@@ -51,36 +55,51 @@ public class Controller {
         fullScreenSwitch();
     }
 
+    private long timerr = System.currentTimeMillis();
     public void startTraining(){
         fullScreenSwitch();
-
-        trainingClickCountLabel.setText("Кількість натиснень: 0");
+        trainingImageClickCount = 0;
+        trainingImagePcCount = -1;
+        trainingClickCountLabel.setText("Кількість натиснень: 0  Кількість пропусків: 0");
         trainingClickCountLabel.setVisible(true);
         trainingImage.setVisible(true);
+        Timer timer = new Timer();
 
-        Random random = new Random();
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(new Runnable() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                int posX = random.nextInt((int)(Values.stage.getWidth() - trainingImage.getFitWidth()));
-                int posY = random.nextInt((int)(Values.stage.getHeight() - trainingImage.getFitHeight()));
-                trainingImage.setLayoutX(posX);
-                trainingImage.setLayoutY(posY);
+                moveImageTraining("pc");
                 if(!Values.stage.isFullScreen())
                 {
                     trainingClickCountLabel.setVisible(false);
                     trainingImageClickCount = 0;
                     trainingImage.setVisible(false);
-                    service.shutdown();
+                    timer.cancel();
                 }
             }
-        }, 0, 1, TimeUnit.SECONDS);
+        };
+        timer.schedule(task, 0, 1000);
     }
 
     public void trainingImageClick(){
-        trainingImageClickCount++;
-        trainingClickCountLabel.setText("Кількість натиснень: " + trainingImageClickCount);
+        moveImageTraining("click");
+    }
+
+    public void moveImageTraining(String who){
+        if(((who.equals("pc"))&&(System.currentTimeMillis() - timerr >= 1000))||(who.equals("click"))){
+            Random random = new Random();
+            int posX = random.nextInt((int)(Values.stage.getWidth() - trainingImage.getFitWidth()));
+            int posY = random.nextInt((int)(Values.stage.getHeight() - trainingImage.getFitHeight()));
+            trainingImage.setLayoutX(posX);
+            trainingImage.setLayoutY(posY);
+            timerr = System.currentTimeMillis();
+
+            if(who.equals("pc")) trainingImagePcCount++;
+            else trainingImageClickCount++;
+
+            Platform.runLater(() -> trainingClickCountLabel.setText("Кількість натиснень: " + trainingImageClickCount + " Кількість пропусків: " + trainingImagePcCount));
+        }
+
     }
 
     public void exit(){
