@@ -30,8 +30,8 @@ public class Controller {
     public ColorPicker colorPicker;
 
     public ImageView trainingImage;
-
-    public boolean thisMenu = true;
+    public Label trainingClickCountLabel;
+    public int trainingImageClickCount = 0;
     public void startDaltonTest(){
         fullScreenSwitch();
     }
@@ -53,7 +53,11 @@ public class Controller {
 
     public void startTraining(){
         fullScreenSwitch();
+
+        trainingClickCountLabel.setText("Кількість натиснень: 0");
+        trainingClickCountLabel.setVisible(true);
         trainingImage.setVisible(true);
+
         Random random = new Random();
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleWithFixedDelay(new Runnable() {
@@ -63,13 +67,20 @@ public class Controller {
                 int posY = random.nextInt((int)(Values.stage.getHeight() - trainingImage.getFitHeight()));
                 trainingImage.setLayoutX(posX);
                 trainingImage.setLayoutY(posY);
-                if(thisMenu == true)
+                if(!Values.stage.isFullScreen())
                 {
+                    trainingClickCountLabel.setVisible(false);
+                    trainingImageClickCount = 0;
                     trainingImage.setVisible(false);
                     service.shutdown();
                 }
             }
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    public void trainingImageClick(){
+        trainingImageClickCount++;
+        trainingClickCountLabel.setText("Кількість натиснень: " + trainingImageClickCount);
     }
 
     public void exit(){
@@ -78,12 +89,10 @@ public class Controller {
 
     public void fullScreenSwitch(){
         if(Values.stage.isFullScreen()){
-            thisMenu = true;
             Values.stage.setFullScreen(false);
             menu.setVisible(true);
             backToMenuBtn.setVisible(false);
         }else{
-            thisMenu = false;
             Values.stage.setFullScreen(true);
             menu.setVisible(false);
             backToMenuBtn.setVisible(true);

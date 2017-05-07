@@ -78,9 +78,12 @@
             </VBox.margin>
         </Button>
     </VBox>
-   <ImageView fx:id="trainingImage"  fitHeight="150.0" fitWidth="200.0" layoutX="135.0" layoutY="205.0" visible="false" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../image/Map.jpg" />
-      </image>
-   </ImageView>
+
+    <ImageView fx:id="trainingImage"  fitHeight="150.0" fitWidth="200.0" layoutX="135.0" layoutY="205.0" visible="false" pickOnBounds="true" preserveRatio="true" onMouseClicked="#trainingImageClick">
+        <image>
+            <Image url="@../image/Map.jpg" />
+        </image>
+    </ImageView>
+
+    <Label visible="false" fx:id="trainingClickCountLabel" AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="8.0"/>
 </AnchorPane>
