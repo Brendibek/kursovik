@@ -2,18 +2,15 @@ package sample;
 
 import javafx.application.Platform;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import resource.Values;
 
-import java.util.Date;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 public class Controller {
     public VBox menu;
@@ -33,9 +30,19 @@ public class Controller {
     public CheckBox colorCheck;
     public ColorPicker colorPicker;
 
+    public VBox colorTestQuestionForm;
+    public Rectangle colorTestV1, colorTestV2, colorTestV3, colorTestV4;
+    public RadioButton colorTestV1Radio, colorTestV2Radio, colorTestV3Radio, colorTestV4Radio;
+    private int colorTestCorrectAnswers = 0, colorTestQuestionNum = 0;
+    private ArrayList<int[]> colorTestQuestions = new ArrayList<>();
+
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
-    public int trainingImageClickCount, trainingImagePcCount;
+    private int trainingImageClickCount, trainingImagePcCount;
+
+
+    private Random random = new Random();
+
     public void startDaltonTest(){
         fullScreenSwitch();
     }
@@ -51,8 +58,60 @@ public class Controller {
     }
 
     public void startColorTest(){
+        for(int i = 0; i < colorTestCountSlider.getValue(); i++){
+            int[] temp = {random.nextInt(235), random.nextInt(235), random.nextInt(235), random.nextInt(4)};
+            colorTestQuestions.add(temp);
+        }
+
+        int[] temp = colorTestQuestions.get(colorTestQuestionNum);
+        colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
+
         colorTestMenu.setVisible(false);
         fullScreenSwitch();
+        colorTestQuestionForm.setVisible(true);
+    }
+
+    public void colorTestSubmitQuestion(){
+        int[] temp = colorTestQuestions.get(colorTestQuestionNum);
+
+        if((temp[3] == 0 && colorTestV1Radio.isSelected()) || (temp[3] == 1 && colorTestV2Radio.isSelected()) || (temp[3] == 2 && colorTestV3Radio.isSelected()) || (temp[3] == 3 && colorTestV4Radio.isSelected()))
+            colorTestCorrectAnswers++;
+
+        colorTestQuestionNum++;
+
+        try {
+            temp = colorTestQuestions.get(colorTestQuestionNum);
+            colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
+        }catch (IndexOutOfBoundsException ex){
+            //test end
+        }
+
+        colorTestV1Radio.setSelected(false);
+        colorTestV2Radio.setSelected(false);
+        colorTestV3Radio.setSelected(false);
+        colorTestV4Radio.setSelected(false);
+    }
+
+    private void colorTestDraw(int R, int G, int B, int answer){
+        if(answer == 0)
+            colorTestV1.setFill(Color.rgb(R + 20, G + 20, B + 20));
+        else
+            colorTestV1.setFill(Color.rgb(R, G, B));
+
+        if(answer == 1)
+            colorTestV2.setFill(Color.rgb(R + 20, G + 20, B + 20));
+        else
+            colorTestV2.setFill(Color.rgb(R, G, B));
+
+        if(answer == 2)
+            colorTestV3.setFill(Color.rgb(R + 20, G + 20, B + 20));
+        else
+            colorTestV3.setFill(Color.rgb(R, G, B));
+
+        if(answer == 3)
+            colorTestV4.setFill(Color.rgb(R + 20, G + 20, B + 20));
+        else
+            colorTestV4.setFill(Color.rgb(R, G, B));
     }
 
     private long timerr = System.currentTimeMillis();
@@ -111,6 +170,11 @@ public class Controller {
             Values.stage.setFullScreen(false);
             menu.setVisible(true);
             backToMenuBtn.setVisible(false);
+
+            //temp
+            colorTestQuestionForm.setVisible(false);
+            colorTestCorrectAnswers = 0;
+            colorTestQuestionNum = 0;
         }else{
             Values.stage.setFullScreen(true);
             menu.setVisible(false);

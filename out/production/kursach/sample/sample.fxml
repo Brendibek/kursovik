@@ -5,13 +5,17 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <VBox fx:id="menu" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <Button fx:id="daltonBtn" focusTraversable="false" onAction="#startDaltonTest" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на дальтонізм">
              <VBox.margin>
@@ -66,7 +70,7 @@
             </VBox.margin>
         </CheckBox>
 
-        <ColorPicker fx:id="colorPicker" visible="${colorCheck.selected}">
+        <ColorPicker fx:id="colorPicker" editable="true" visible="${colorCheck.selected}">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" />
             </VBox.margin>
@@ -79,11 +83,56 @@
         </Button>
     </VBox>
 
-    <ImageView fx:id="trainingImage"  fitHeight="150.0" fitWidth="200.0" layoutX="135.0" layoutY="205.0" visible="false" pickOnBounds="true" preserveRatio="true" onMouseClicked="#trainingImageClick">
+    <VBox alignment="CENTER" fx:id="colorTestQuestionForm" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <HBox alignment="CENTER">
+            <Rectangle fx:id="colorTestV1" height="300" width="300">
+                <HBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </HBox.margin>
+            </Rectangle>
+
+            <Rectangle fx:id="colorTestV2" height="300" width="300">
+                <HBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </HBox.margin>
+            </Rectangle>
+
+            <Rectangle fx:id="colorTestV3" height="300" width="300">
+                <HBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </HBox.margin>
+            </Rectangle>
+
+            <Rectangle fx:id="colorTestV4" height="300" width="300">
+                <HBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </HBox.margin>
+            </Rectangle>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <RadioButton fx:id="colorTestV1Radio">
+                <toggleGroup>
+                   <ToggleGroup fx:id="variant" />
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="colorTestV2Radio" toggleGroup="$variant" />
+            <RadioButton fx:id="colorTestV3Radio" toggleGroup="$variant" />
+            <RadioButton fx:id="colorTestV4Radio" toggleGroup="$variant" />
+        </HBox>
+
+        <Button fx:id="colorTestSubmitBtn" prefHeight="40" onAction="#colorTestSubmitQuestion" text="Ok">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
+
+    <ImageView fx:id="trainingImage" fitHeight="150.0" fitWidth="200.0" layoutX="135.0" layoutY="205.0" onMouseClicked="#trainingImageClick" pickOnBounds="true" preserveRatio="true" visible="false">
         <image>
             <Image url="@../image/Map.jpg" />
         </image>
     </ImageView>
 
-    <Label visible="false" fx:id="trainingClickCountLabel" AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="8.0"/>
+    <Label fx:id="trainingClickCountLabel" visible="false" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
 </AnchorPane>
