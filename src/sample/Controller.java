@@ -35,6 +35,8 @@ public class Controller {
     public RadioButton colorTestV1Radio, colorTestV2Radio, colorTestV3Radio, colorTestV4Radio;
     private int colorTestCorrectAnswers = 0, colorTestQuestionNum = 0;
     private ArrayList<int[]> colorTestQuestions = new ArrayList<>();
+    public VBox colorTestResult;
+    public Label colorTestResultLabel;
 
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
@@ -72,18 +74,23 @@ public class Controller {
     }
 
     public void colorTestSubmitQuestion(){
-        int[] temp = colorTestQuestions.get(colorTestQuestionNum);
+        try{
+            int[] temp = colorTestQuestions.get(colorTestQuestionNum);
 
-        if((temp[3] == 0 && colorTestV1Radio.isSelected()) || (temp[3] == 1 && colorTestV2Radio.isSelected()) || (temp[3] == 2 && colorTestV3Radio.isSelected()) || (temp[3] == 3 && colorTestV4Radio.isSelected()))
-            colorTestCorrectAnswers++;
+            if((temp[3] == 0 && colorTestV1Radio.isSelected()) || (temp[3] == 1 && colorTestV2Radio.isSelected()) || (temp[3] == 2 && colorTestV3Radio.isSelected()) || (temp[3] == 3 && colorTestV4Radio.isSelected()))
+                colorTestCorrectAnswers++;
 
-        colorTestQuestionNum++;
+            colorTestQuestionNum++;
 
-        try {
             temp = colorTestQuestions.get(colorTestQuestionNum);
             colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
         }catch (IndexOutOfBoundsException ex){
-            //test end
+            colorTestResult.setVisible(true);
+            colorTestResultLabel.setText(Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
+            colorTestQuestionForm.setVisible(false);
+            colorTestCorrectAnswers = 0;
+            colorTestQuestionNum = 0;
+            System.out.println(colorTestCorrectAnswers);
         }
 
         colorTestV1Radio.setSelected(false);
@@ -93,23 +100,24 @@ public class Controller {
     }
 
     private void colorTestDraw(int R, int G, int B, int answer){
+        int k = 15;
         if(answer == 0)
-            colorTestV1.setFill(Color.rgb(R + 20, G + 20, B + 20));
+            colorTestV1.setFill(Color.rgb(R + k, G + k, B + k));
         else
             colorTestV1.setFill(Color.rgb(R, G, B));
 
         if(answer == 1)
-            colorTestV2.setFill(Color.rgb(R + 20, G + 20, B + 20));
+            colorTestV2.setFill(Color.rgb(R + k, G + k, B + k));
         else
             colorTestV2.setFill(Color.rgb(R, G, B));
 
         if(answer == 2)
-            colorTestV3.setFill(Color.rgb(R + 20, G + 20, B + 20));
+            colorTestV3.setFill(Color.rgb(R + k, G + k, B + k));
         else
             colorTestV3.setFill(Color.rgb(R, G, B));
 
         if(answer == 3)
-            colorTestV4.setFill(Color.rgb(R + 20, G + 20, B + 20));
+            colorTestV4.setFill(Color.rgb(R + k, G + k, B + k));
         else
             colorTestV4.setFill(Color.rgb(R, G, B));
     }
@@ -171,10 +179,7 @@ public class Controller {
             menu.setVisible(true);
             backToMenuBtn.setVisible(false);
 
-            //temp
-            colorTestQuestionForm.setVisible(false);
-            colorTestCorrectAnswers = 0;
-            colorTestQuestionNum = 0;
+            colorTestResult.setVisible(false);
         }else{
             Values.stage.setFullScreen(true);
             menu.setVisible(false);
