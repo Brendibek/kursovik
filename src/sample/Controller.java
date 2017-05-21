@@ -60,17 +60,19 @@ public class Controller {
     }
 
     public void startColorTest(){
-        for(int i = 0; i < colorTestCountSlider.getValue(); i++){
-            int[] temp = {random.nextInt(235), random.nextInt(235), random.nextInt(235), random.nextInt(4)};
-            colorTestQuestions.add(temp);
+        if(colorTestCountSlider.getValue()!=0){
+            for(int i = 0; i < colorTestCountSlider.getValue(); i++){
+                int[] temp = {random.nextInt(235), random.nextInt(235), random.nextInt(235), random.nextInt(4)};
+                colorTestQuestions.add(temp);
+            }
+
+            int[] temp = colorTestQuestions.get(colorTestQuestionNum);
+            colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
+
+            colorTestMenu.setVisible(false);
+            fullScreenSwitch();
+            colorTestQuestionForm.setVisible(true);
         }
-
-        int[] temp = colorTestQuestions.get(colorTestQuestionNum);
-        colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
-
-        colorTestMenu.setVisible(false);
-        fullScreenSwitch();
-        colorTestQuestionForm.setVisible(true);
     }
 
     public void colorTestSubmitQuestion(){
@@ -90,9 +92,8 @@ public class Controller {
             colorTestQuestionForm.setVisible(false);
             colorTestCorrectAnswers = 0;
             colorTestQuestionNum = 0;
-            System.out.println(colorTestCorrectAnswers);
+            colorTestQuestions.clear();
         }
-
         colorTestV1Radio.setSelected(false);
         colorTestV2Radio.setSelected(false);
         colorTestV3Radio.setSelected(false);
@@ -188,6 +189,7 @@ public class Controller {
     }
 
     public void backToMenu(){
+
         fullScreenSwitch();
     }
 }
