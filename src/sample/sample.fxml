@@ -15,9 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <VBox fx:id="menu" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
-        <Button fx:id="daltonBtn" focusTraversable="false" onAction="#startDaltonTest" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на дальтонізм">
+        <Button fx:id="daltonBtn" focusTraversable="false" onAction="#showDaltonTestSettings" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на дальтонізм">
              <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
              </VBox.margin>
@@ -44,6 +46,72 @@
 
     <Button fx:id="backToMenuBtn" onAction="#backToMenu" prefHeight="40" prefWidth="300" styleClass="button_my" text="Вихід в меню" visible="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0">
     </Button>
+
+    <VBox fx:id="daltonTestMenu" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <Button fx:id="daltonTestBackToMenu" onAction="#hideDaltonTestSettings" styleClass="button_my" prefHeight="40" text="Повернутися до меню">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+
+        <Label text="Кількість питань">
+            <VBox.margin>
+                <Insets left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Label>
+
+        <Slider fx:id="daltonTestCountSlider" blockIncrement="5" majorTickUnit="5" max="50" min="0" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" />
+            </VBox.margin>
+        </Slider>
+
+        <Button fx:id="startDaltonTestBtn" onAction="#startDaltonTest" prefHeight="40" styleClass="button_my" text="Почати тест ">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
+
+
+    <VBox fx:id="daltonTestQuestionForm" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <ImageView fx:id="daltonImage"></ImageView>
+
+        <Label fx:id="daltonQuestion"></Label>
+
+        <TextField fx:id="daltonAnswer" visible="false"/>
+
+        <VBox fx:id="daltonAnswers" alignment="CENTER" visible="false">
+            <RadioButton fx:id="daltonTestV1Radio">
+                <toggleGroup>
+                   <ToggleGroup fx:id="daltonVariant" />
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="daltonTestV2Radio" toggleGroup="$daltonVariant" />
+            <RadioButton fx:id="daltonTestV3Radio" toggleGroup="$daltonVariant" />
+            <RadioButton fx:id="daltonTestV4Radio" toggleGroup="$daltonVariant" />
+        </VBox>
+
+        <Button fx:id="daltonTestSubmitBtn" prefHeight="40" onAction="#daltonTestSubmitQuestion" styleClass="button_my" text="Ok">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
+
+    <VBox alignment="CENTER" fx:id="daltonTestResult" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <Label fx:id="daltonTestResultLabel">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Label>
+
+        <Button fx:id="daltonTestResultAccept" prefHeight="40" styleClass="button_my" onAction="#fullScreenSwitch" text="Ok">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
 
     <VBox fx:id="colorTestMenu" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
         <Button fx:id="colorTestBackToMenu" onAction="#hideColorTestSettings" prefHeight="40" styleClass="button_my" text="Повернутися до меню">
@@ -113,13 +181,14 @@
         <HBox alignment="CENTER">
             <RadioButton fx:id="colorTestV1Radio">
                 <toggleGroup>
-                   <ToggleGroup fx:id="variant" />
+                    <ToggleGroup fx:id="variant" />
                 </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="colorTestV2Radio" toggleGroup="$variant" />
             <RadioButton fx:id="colorTestV3Radio" toggleGroup="$variant" />
             <RadioButton fx:id="colorTestV4Radio" toggleGroup="$variant" />
         </HBox>
+
 
         <Button fx:id="colorTestSubmitBtn" prefHeight="40" onAction="#colorTestSubmitQuestion" text="Ok">
             <VBox.margin>
@@ -147,6 +216,19 @@
             <Image url="@../image/Map.jpg" />
         </image>
     </ImageView>
+
+    <VBox AnchorPane.bottomAnchor="8" AnchorPane.leftAnchor="8" fx:id="userPane">
+        <Label visible="false" fx:id="userEmail"></Label>
+        <Button fx:id="signInBtn" onAction="#signIn" text="Увійти" styleClass="button_my"></Button>
+        <Button fx:id="signUpBtn" onAction="#signUp" text="Зареєструватися" styleClass="button_my"></Button>
+    </VBox>
+
+    <VBox visible="false" alignment="CENTER" fx:id="signForm" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <TextField fx:id="emailField"></TextField>
+        <PasswordField fx:id="passwordField"></PasswordField>
+        <PasswordField fx:id="passwordField2" visible="false"></PasswordField>
+        <Button fx:id="signSubmitBtn" styleClass="button_my" onAction="#signSubmit"></Button>
+    </VBox>
 
     <Label fx:id="trainingClickCountLabel" visible="false" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
 </AnchorPane>

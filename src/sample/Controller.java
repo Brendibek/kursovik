@@ -4,15 +4,22 @@ import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import resource.Values;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Controller {
+    private JSONParser jsonParser = new JSONParser();
+
     public VBox menu;
 
     public Button daltonBtn;
@@ -22,8 +29,23 @@ public class Controller {
 
     public Button backToMenuBtn;
 
-    public VBox colorTestMenu;
+    public VBox daltonTestMenu;
+    public Slider daltonTestCountSlider;
+    public Button startDaltonTestBtn;
+    public Button daltonTestBackToMenu;
 
+    private ArrayList<String[]> daltonTestQuestions = new ArrayList<>();
+    public VBox daltonTestQuestionForm;
+    public ImageView daltonImage;
+    public Label daltonQuestion;
+    public VBox daltonAnswers;
+    public TextField daltonAnswer;
+    public RadioButton daltonTestV1Radio, daltonTestV2Radio, daltonTestV3Radio, daltonTestV4Radio;
+    private int daltonCurrentCorrectAnswer = -1, daltonTestCorrectAnswers = 0, daltonTestQuestionNum = 0;
+    public VBox daltonTestResult;
+    public Label daltonTestResultLabel;
+
+    public VBox colorTestMenu;
     public Slider colorTestCountSlider;
     public Button startColorTestBtn;
     public Button colorTestBackToMenu;
@@ -42,11 +64,167 @@ public class Controller {
     public Label trainingClickCountLabel;
     private int trainingImageClickCount, trainingImagePcCount;
 
-
     private Random random = new Random();
+
+    public VBox userPane;
+    public Label userEmail;
+    public Button signInBtn;
+
+    public VBox signForm;
+    public TextField emailField;
+    public PasswordField passwordField;
+    public PasswordField passwordField2;
+    public Button signSubmitBtn;
+
+    public void signIn(){
+        if(!userEmail.isVisible()) {
+            showSignForm();
+            passwordField2.setVisible(false);
+            signSubmitBtn.setText("Увійти");
+        }else{
+            userEmail.setVisible(false);
+            signInBtn.setText("Увійти");
+        }
+    }
+
+    public void signUp(){
+        showSignForm();
+        passwordField2.setVisible(true);
+        signSubmitBtn.setText("Зареєструватися");
+    }
+
+    public void signSubmit(){
+        String email = emailField.getText();
+        String pass = passwordField.getText();
+
+        if(passwordField2.isVisible()){
+            String pass2 = passwordField2.getText();
+
+            if(email.contains("@") && email.contains(".") && !email.contains(",")){
+                if(pass.length()>=6){
+                    if(pass.equals(pass2)){
+                        //md5
+
+                        DBConnector.addUser(email, pass, pass2);
+                        emailField.clear();
+                        passwordField.clear();
+                        passwordField2.clear();
+                    }else{
+                        //разные пароли
+                    }
+                }else{
+                    //пароль слишком короткий
+                }
+            }else{
+                //не правильный мейл
+            }
+        }else{
+            try {
+                String[] user = DBConnector.getUserByEmail(email).get(0);
+
+                if(user[4].equals("1")) {
+                    System.out.println(user[3]);
+                    if(user[3].equals(pass)){
+                        userEmail.setText(email);
+                        userEmail.setVisible(true);
+                        signInBtn.setText("Вийти");
+                        System.out.println("success");
+                    }else{
+                        System.out.println("wrong password");
+                    }
+                }else{
+                    System.out.println("not confirmed");
+                }
+            }catch (NullPointerException ex){
+                System.out.println("no user");
+            }
+
+        }
+    }
+
+    private void showSignForm(){
+        signForm.setVisible(true);
+        menu.setVisible(false);
+        userPane.setVisible(false);
+        backToMenuBtn.setVisible(true);
+    }
 
     public void startDaltonTest(){
         fullScreenSwitch();
+        daltonTestMenu.setVisible(false);
+        daltonTestQuestions = DBConnector.getQuestions();
+
+        daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
+
+        daltonTestQuestionForm.setVisible(true);
+    }
+
+
+    public void daltonTestSubmitQuestion(){
+        try {
+            if (daltonAnswer.isVisible()) {
+                if (Integer.parseInt(daltonAnswer.getText()) == daltonCurrentCorrectAnswer)
+                    daltonTestCorrectAnswers++;
+            } else {
+                if ((daltonCurrentCorrectAnswer == 0 && daltonTestV1Radio.isSelected()) || (daltonCurrentCorrectAnswer == 1 && daltonTestV2Radio.isSelected()) || (daltonCurrentCorrectAnswer == 2 && daltonTestV3Radio.isSelected()) || (daltonCurrentCorrectAnswer == 3 && daltonTestV4Radio.isSelected()))
+                    daltonTestCorrectAnswers++;
+            }
+            daltonTestQuestionNum++;
+
+            daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
+        }catch (IndexOutOfBoundsException ex){
+            daltonTestResult.setVisible(true);
+            daltonTestResultLabel.setText(Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
+            daltonTestEnd();
+        }catch (NumberFormatException ex){
+            //empty field
+        }
+    }
+
+    public void showDaltonTestSettings(){
+        menu.setVisible(false);
+        daltonTestMenu.setVisible(true);
+    }
+
+
+    public void hideDaltonTestSettings(){
+        menu.setVisible(true);
+        daltonTestMenu.setVisible(false);
+    }
+
+    private void daltonTestEnd(){
+        daltonTestQuestionForm.setVisible(false);
+        daltonTestCorrectAnswers = 0;
+        daltonTestQuestionNum = 0;
+    }
+
+    private void daltonQuestionInit(String[] question){
+        try {
+            daltonImage.setImage(new Image(question[2]));
+
+            String json = question[3];
+            JSONObject object = (JSONObject) jsonParser.parse(json);
+
+            if(object.size() == 1){
+                daltonCurrentCorrectAnswer = Integer.parseInt(object.get("answer").toString());
+
+                daltonAnswers.setVisible(false);
+                daltonAnswer.setVisible(true);
+            }else{
+                daltonCurrentCorrectAnswer = Integer.parseInt(object.get("answerNum").toString());
+
+                daltonTestV1Radio.setText(object.get("answer1").toString());
+                daltonTestV2Radio.setText(object.get("answer2").toString());
+                daltonTestV3Radio.setText(object.get("answer3").toString());
+                daltonTestV4Radio.setText(object.get("answer4").toString());
+
+                daltonAnswer.setVisible(false);
+                daltonAnswers.setVisible(true);
+            }
+
+        }catch (ParseException ex){
+            ex.printStackTrace();
+        }
     }
 
     public void showColorTestSettings(){
@@ -89,15 +267,19 @@ public class Controller {
         }catch (IndexOutOfBoundsException ex){
             colorTestResult.setVisible(true);
             colorTestResultLabel.setText(Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
-            colorTestQuestionForm.setVisible(false);
-            colorTestCorrectAnswers = 0;
-            colorTestQuestionNum = 0;
-            colorTestQuestions.clear();
+            colorTestEnd();
         }
         colorTestV1Radio.setSelected(false);
         colorTestV2Radio.setSelected(false);
         colorTestV3Radio.setSelected(false);
         colorTestV4Radio.setSelected(false);
+    }
+
+    private void colorTestEnd(){
+        colorTestQuestionForm.setVisible(false);
+        colorTestCorrectAnswers = 0;
+        colorTestQuestionNum = 0;
+        colorTestQuestions.clear();
     }
 
     private void colorTestDraw(int R, int G, int B, int answer){
@@ -170,26 +352,34 @@ public class Controller {
 
     }
 
+
     public void exit(){
         System.exit(0);
     }
 
     public void fullScreenSwitch(){
         if(Values.stage.isFullScreen()){
-            Values.stage.setFullScreen(false);
-            menu.setVisible(true);
-            backToMenuBtn.setVisible(false);
-
-            colorTestResult.setVisible(false);
+            backToMenu();
         }else{
             Values.stage.setFullScreen(true);
             menu.setVisible(false);
+            userPane.setVisible(false);
             backToMenuBtn.setVisible(true);
         }
     }
 
     public void backToMenu(){
+        Values.stage.setFullScreen(false);
+        menu.setVisible(true);
+        userPane.setVisible(true);
+        backToMenuBtn.setVisible(false);
+        userPane.setVisible(true);
+        signForm.setVisible(false);
 
-        fullScreenSwitch();
+        colorTestResult.setVisible(false);
+        colorTestEnd();
+
+        daltonTestResult.setVisible(false);
+        daltonTestEnd();
     }
 }
