@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -66,6 +69,7 @@ public class Controller {
 
     public Label testLetter;
     public Circle testCircle;
+    public AnchorPane lineOfSightPane;
 
     private int trainingImageClickCount, trainingImagePcCount;
 
@@ -364,8 +368,14 @@ public class Controller {
         testCircle.setLayoutX(Values.stage.getWidth()/2-6);
         testCircle.setLayoutY(Values.stage.getHeight()/2-6);
         testLetter.setText(Character.toString ((char) (random.nextInt(26)+65)));
-        testLetter.setVisible(true);
-        testCircle.setVisible(true);
+        lineOfSightPane.setVisible(true);
+        lineOfSightPane.requestFocus();
+    }
+
+    public void lineOfSightKeyPerssed(KeyEvent keyEvent){
+        if(keyEvent.getCode() == KeyCode.valueOf(testLetter.getText())){
+            System.out.println("+1  " + keyEvent.getCode().toString());
+        }
     }
 
     public void exit(){
@@ -390,6 +400,7 @@ public class Controller {
         backToMenuBtn.setVisible(false);
         userPane.setVisible(true);
         signForm.setVisible(false);
+        lineOfSightPane.setVisible(false);
 
         colorTestResult.setVisible(false);
         colorTestEnd();

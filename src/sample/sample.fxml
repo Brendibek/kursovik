@@ -223,8 +223,13 @@
             <Image url="@../image/Map.jpg" />
         </image>
     </ImageView>
-    <Label fx:id="testLetter" styleClass="letter_size" visible="false" />
-    <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+
+
+    <AnchorPane fx:id="lineOfSightPane" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8" onKeyPressed="#lineOfSightKeyPerssed">
+        <Label fx:id="testLetter" styleClass="letter_size"/>
+        <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+    </AnchorPane>
+
 
     <VBox fx:id="userPane" AnchorPane.bottomAnchor="8" AnchorPane.leftAnchor="8">
         <Label fx:id="userEmail" visible="false" />
