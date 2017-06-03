@@ -8,14 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import resource.Values;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.Timer;
 
 public class Controller {
     private JSONParser jsonParser = new JSONParser();
@@ -62,6 +63,10 @@ public class Controller {
 
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
+
+    public Label testLetter;
+    public Circle testCircle;
+
     private int trainingImageClickCount, trainingImagePcCount;
 
     private Random random = new Random();
@@ -352,6 +357,16 @@ public class Controller {
 
     }
 
+    public void lineOfSight(){
+        fullScreenSwitch();
+        testLetter.setLayoutX(0);
+        testLetter.setLayoutY(Values.stage.getHeight()/2-33);
+        testCircle.setLayoutX(Values.stage.getWidth()/2-6);
+        testCircle.setLayoutY(Values.stage.getHeight()/2-6);
+        testLetter.setText(Character.toString ((char) (random.nextInt(26)+65)));
+        testLetter.setVisible(true);
+        testCircle.setVisible(true);
+    }
 
     public void exit(){
         System.exit(0);
