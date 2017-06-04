@@ -67,7 +67,10 @@ public class Controller {
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
 
-    public Label testLetter;
+    public Label testLetter_Left;
+    public Label testLetter_Up;
+    public Label testLetter_Right;
+    public Label testLetter_Down;
     public Circle testCircle;
     public AnchorPane lineOfSightPane;
 
@@ -361,20 +364,127 @@ public class Controller {
 
     }
 
-    public void lineOfSight(){
+    int trueAnswer = 0;
+    String letterSide = "left";
+    String letterLabel;
+    public void lineOfSightStart(){
         fullScreenSwitch();
-        testLetter.setLayoutX(0);
-        testLetter.setLayoutY(Values.stage.getHeight()/2-33);
         testCircle.setLayoutX(Values.stage.getWidth()/2-6);
         testCircle.setLayoutY(Values.stage.getHeight()/2-6);
-        testLetter.setText(Character.toString ((char) (random.nextInt(26)+65)));
+        testLetter_Left.setLayoutX(0);
+        testLetter_Left.setLayoutY(Values.stage.getHeight()/2-66);
+
+        testLetter_Up.setLayoutX(Values.stage.getWidth()/2-33);
+        testLetter_Up.setLayoutY(0);
+
+        testLetter_Right.setLayoutX(Values.stage.getWidth()-66);
+        testLetter_Right.setLayoutY(Values.stage.getHeight()/2-66);
+
+        testLetter_Down.setLayoutX(Values.stage.getWidth()/2-33);
+        testLetter_Down.setLayoutY(Values.stage.getHeight()-100);
+
         lineOfSightPane.setVisible(true);
         lineOfSightPane.requestFocus();
+        lineOfSightStartted(trueAnswer);
+
+        testLetter_Left.setVisible(true);
+    }
+
+    public void lineOfSightStartted(int answer){
+        if(trueAnswer == 3){
+            switch (letterSide){
+                case "left":{
+                    testLetter_Left.setVisible(false);
+                    testLetter_Up.setVisible(true);
+                    letterSide = "up";
+                    break;
+                }
+                case "up":{
+                    testLetter_Up.setVisible(false);
+                    testLetter_Right.setVisible(true);
+                    letterSide = "right";
+                    break;
+                }
+                case "right":{
+                    testLetter_Right.setVisible(false);
+                    testLetter_Down.setVisible(true);
+                    letterSide = "down";
+                    break;
+                }
+                case "down":{
+                    testLetter_Left.setText("|");
+                    testLetter_Up.setText("—");
+                    testLetter_Right.setText("|");
+                    testLetter_Down.setText("—");
+                    testLetter_Left.setVisible(true);
+                    testLetter_Up.setVisible(true);
+                    testLetter_Right.setVisible(true);
+                    testLetter_Down.setVisible(true);
+                    letterSide = "ok";
+                    break;
+                }
+            }
+            trueAnswer = 0;
+        }
+
+        if(letterSide != "ok") {
+            letterLabel = Character.toString((char) (random.nextInt(26) + 65));
+            switch (letterSide) {
+                case "left": {
+                    testLetter_Left.setText(letterLabel);
+                    break;
+                }
+                case "up": {
+                    testLetter_Up.setText(letterLabel);
+                    break;
+                }
+                case "right": {
+                    testLetter_Right.setText(letterLabel);
+                    break;
+                }
+                case "down": {
+                    testLetter_Down.setText(letterLabel);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void lineOfSightErr(){
+        if(letterSide != "ok") {
+            letterLabel = Character.toString((char) (random.nextInt(26) + 65));
+            switch (letterSide) {
+                case "left": {
+                    testLetter_Left.setLayoutX(testLetter_Left.getLayoutX() + 5);
+                    testLetter_Left.setText(letterLabel);
+                    break;
+                }
+                case "up": {
+                    testLetter_Up.setLayoutY(testLetter_Up.getLayoutY() + 5);
+                    testLetter_Up.setText(letterLabel);
+                    break;
+                }
+                case "right": {
+                    testLetter_Right.setLayoutX(testLetter_Right.getLayoutX() - 5);
+                    testLetter_Right.setText(letterLabel);
+                    break;
+                }
+                case "down": {
+                    testLetter_Down.setLayoutY(testLetter_Down.getLayoutY() - 5);
+                    testLetter_Down.setText(letterLabel);
+                    break;
+                }
+            }
+            trueAnswer = 0;
+        }
     }
 
     public void lineOfSightKeyPerssed(KeyEvent keyEvent){
-        if(keyEvent.getCode() == KeyCode.valueOf(testLetter.getText())){
-            System.out.println("+1  " + keyEvent.getCode().toString());
+        if(keyEvent.getCode() == KeyCode.valueOf(letterLabel)){
+            trueAnswer += 1;
+            lineOfSightStartted(trueAnswer);
+        } else{
+            lineOfSightErr();
         }
     }
 

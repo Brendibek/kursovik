@@ -38,7 +38,7 @@
             </VBox.margin>
         </Button>
 
-        <Button fx:id="lineOfSightBtn" focusTraversable="false" onAction="#lineOfSight" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на поле зору">
+        <Button fx:id="lineOfSightBtn" focusTraversable="false" onAction="#lineOfSightStart" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на поле зору">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
@@ -223,8 +223,16 @@
             <Image url="@../image/Map.jpg" />
         </image>
     </ImageView>
-    <Label fx:id="testLetter" styleClass="letter_size" visible="false" />
-    <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+
+
+    <AnchorPane fx:id="lineOfSightPane" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8" onKeyPressed="#lineOfSightKeyPerssed">
+        <Label fx:id="testLetter_Left" styleClass="letter_size" visible="false"/>
+        <Label fx:id="testLetter_Up" styleClass="letter_size" visible="false"/>
+        <Label fx:id="testLetter_Right" styleClass="letter_size" visible="false"/>
+        <Label fx:id="testLetter_Down" styleClass="letter_size" visible="false"/>
+        <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+    </AnchorPane>
+
 
     <VBox fx:id="userPane" AnchorPane.bottomAnchor="8" AnchorPane.leftAnchor="8">
         <Label fx:id="userEmail" visible="false" />
