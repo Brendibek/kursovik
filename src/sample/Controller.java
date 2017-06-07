@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -26,6 +27,7 @@ public class Controller {
 
     public VBox menu;
 
+    public Button editorBtn;
     public Button daltonBtn;
     public Button colorBtn;
     public Button trainingBtn;
@@ -48,6 +50,11 @@ public class Controller {
     private int daltonCurrentCorrectAnswer = -1, daltonTestCorrectAnswers = 0, daltonTestQuestionNum = 0;
     public VBox daltonTestResult;
     public Label daltonTestResultLabel;
+    public RadioButton randomTestBtn;
+    public ToggleGroup testVariant;
+    public VBox daltonTestsPane;
+    private ArrayList<Integer> ids = new ArrayList<>();
+    private ArrayList<HBox> testBoxes = new ArrayList<>();
 
     public VBox colorTestMenu;
     public Slider colorTestCountSlider;
@@ -84,9 +91,15 @@ public class Controller {
 
     public VBox signForm;
     public TextField emailField;
+    public TextArea testDescriptionField;
     public PasswordField passwordField;
     public PasswordField passwordField2;
     public Button signSubmitBtn;
+
+    public VBox editorPane;
+    public TextField testNameField;
+    public VBox editorQuestionsPane;
+    public ArrayList<String[]> editorQuestions = new ArrayList<>();
 
     public void signIn(){
         if(!userEmail.isVisible()) {
@@ -96,6 +109,8 @@ public class Controller {
         }else{
             userEmail.setVisible(false);
             signInBtn.setText("Увійти");
+            editorBtn.setVisible(false);
+            Values.user = null;
         }
     }
 
@@ -121,6 +136,7 @@ public class Controller {
                         emailField.clear();
                         passwordField.clear();
                         passwordField2.clear();
+
                     }else{
                         //разные пароли
                     }
@@ -134,12 +150,16 @@ public class Controller {
             try {
                 String[] user = DBConnector.getUserByEmail(email).get(0);
 
-                if(user[4].equals("1")) {
-                    System.out.println(user[3]);
-                    if(user[3].equals(pass)){
+                if(user[3].equals("1")) {
+                    System.out.println(user[2]);
+                    if(user[2].equals(pass)){
+                        Values.user = new User(Integer.parseInt(user[0]), email, pass);
                         userEmail.setText(email);
                         userEmail.setVisible(true);
                         signInBtn.setText("Вийти");
+
+                        editorBtn.setVisible(true);
+
                         System.out.println("success");
                     }else{
                         System.out.println("wrong password");
@@ -164,7 +184,23 @@ public class Controller {
     public void startDaltonTest(){
         fullScreenSwitch();
         daltonTestMenu.setVisible(false);
-        daltonTestQuestions = DBConnector.getQuestions();
+
+        if(randomTestBtn.isSelected()){
+            daltonTestQuestions = DBConnector.getQuestions();
+        }else{
+            for(int i = 0; i < daltonTestsPane.getChildren().size();i++){
+                HBox hBox = (HBox) daltonTestsPane.getChildren().get(i);
+                RadioButton radioButton = (RadioButton) hBox.getChildren().get(0);
+                if(radioButton.isSelected()){
+                    ArrayList<String[]> questions = DBConnector.getQuestionsByTestId(ids.get(i));
+                    daltonTestQuestions = new ArrayList<>();
+                    for(int j = 0; j<questions.size(); j++){
+                        daltonTestQuestions.addAll(DBConnector.getQuestionsById(Integer.parseInt(questions.get(j)[0])));
+                    }
+                    break;
+                }
+            }
+        }
 
         daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
 
@@ -195,7 +231,38 @@ public class Controller {
 
     public void showDaltonTestSettings(){
         menu.setVisible(false);
+        daltonTestsPane.getChildren().clear();
+        ids.clear();
+        testBoxes.clear();
+
+        ArrayList<String[]> tests = DBConnector.getTests();
+        for(int i = 0; i<tests.size();i++){
+            ids.add(Integer.parseInt(tests.get(i)[0]));
+            HBox hBox = createTestBox(tests.get(i)[1], tests.get(i)[2], DBConnector.getUserById(Integer.parseInt(tests.get(i)[3])).get(0)[1]);
+            testBoxes.add(hBox);
+            daltonTestsPane.getChildren().add(hBox);
+        }
+
         daltonTestMenu.setVisible(true);
+    }
+
+    public HBox createTestBox(String name, String description, String creator){
+        HBox pane = new HBox();
+        RadioButton radioButton = new RadioButton();
+        radioButton.setToggleGroup(testVariant);
+        pane.getChildren().add(radioButton);
+
+        VBox vbox = new VBox();
+        Label nameLabel = new Label(name);
+        vbox.getChildren().add(nameLabel);
+        Label descLabel = new Label(description);
+        vbox.getChildren().add(descLabel);
+        Label creatorLabel = new Label(creator);
+        vbox.getChildren().add(creatorLabel);
+
+        pane.getChildren().add(vbox);
+
+        return pane;
     }
 
 
@@ -488,6 +555,50 @@ public class Controller {
         }
     }
 
+    public void showEditor(){
+        editorQuestions.clear();
+        editorQuestionsPane.getChildren().clear();
+
+        editorQuestions = DBConnector.getQuestions();
+        for(int i = 0; i<editorQuestions.size(); i++){
+            editorQuestionsPane.getChildren().add(createQuestion(new Image(editorQuestions.get(i)[2]), editorQuestions.get(i)[1]));
+        }
+
+        menu.setVisible(false);
+        userPane.setVisible(false);
+        backToMenuBtn.setVisible(true);
+        editorPane.setVisible(true);
+    }
+
+    private HBox createQuestion(Image image, String text){
+        CheckBox checkBox = new CheckBox();
+        ImageView imageView = new ImageView(image);
+        Label textLabel = new Label(text);
+
+        HBox hBox = new HBox();
+        hBox.getChildren().add(checkBox);
+        hBox.getChildren().add(imageView);
+        hBox.getChildren().add(textLabel);
+
+        return hBox;
+    }
+
+    public void saveTest(){
+        String s = testDescriptionField.getText();
+        System.out.println(s);
+        DBConnector.addTest(testNameField.getText(), s);
+        ArrayList<String[]> temp = DBConnector.getTests();
+        int testId = Integer.parseInt(temp.get(temp.size() - 1)[0]);
+
+        for(int i = 0; i<editorQuestionsPane.getChildren().size(); i++){
+            HBox pane = (HBox) editorQuestionsPane.getChildren().get(i);
+            CheckBox checkBox = (CheckBox) pane.getChildren().get(0);
+
+            if(checkBox.isSelected())
+                DBConnector.addTestQuestion(testId, Integer.parseInt(editorQuestions.get(i)[0]));
+        }
+    }
+
     public void exit(){
         System.exit(0);
     }
@@ -511,6 +622,7 @@ public class Controller {
         userPane.setVisible(true);
         signForm.setVisible(false);
         lineOfSightPane.setVisible(false);
+        editorPane.setVisible(false);
 
         colorTestResult.setVisible(false);
         colorTestEnd();

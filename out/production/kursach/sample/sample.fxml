@@ -18,8 +18,17 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <VBox fx:id="menu" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+        <Button visible="true" fx:id="editorBtn" focusTraversable="false" onAction="#showEditor" prefHeight="40" prefWidth="300" styleClass="button_my" text="Редактор">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Button>
+
+
         <Button fx:id="daltonBtn" focusTraversable="false" onAction="#showDaltonTestSettings" prefHeight="40" prefWidth="300" styleClass="button_my" text="Тест на дальтонізм">
              <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -61,6 +70,16 @@
             </VBox.margin>
         </Button>
 
+        <HBox>
+            <RadioButton fx:id="randomTestBtn">
+                <toggleGroup>
+                    <ToggleGroup fx:id="testVariant" />
+                </toggleGroup>
+            </RadioButton>
+
+            <Label text="Тест із випадкових питань"></Label>
+        </HBox>
+
         <Label text="Кількість питань">
             <VBox.margin>
                 <Insets left="3.0" right="3.0" top="3.0" />
@@ -72,6 +91,12 @@
                 <Insets bottom="3.0" left="3.0" right="3.0" />
             </VBox.margin>
         </Slider>
+
+        <ScrollPane>
+            <VBox fx:id="daltonTestsPane">
+
+            </VBox>
+        </ScrollPane>
 
         <Button fx:id="startDaltonTestBtn" onAction="#startDaltonTest" prefHeight="40" styleClass="button_my" text="Почати тест ">
             <VBox.margin>
@@ -245,6 +270,15 @@
         <PasswordField fx:id="passwordField" />
         <PasswordField fx:id="passwordField2" visible="false" />
         <Button fx:id="signSubmitBtn" onAction="#signSubmit" styleClass="button_my" />
+    </VBox>
+
+    <VBox visible="false" fx:id="editorPane" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <TextField fx:id="testNameField"></TextField>
+        <TextArea fx:id="testDescriptionField" ></TextArea>
+        <ScrollPane>
+            <VBox fx:id="editorQuestionsPane"></VBox>
+        </ScrollPane>
+        <Button fx:id="editorSubmitBtn" onAction="#saveTest" prefHeight="40" styleClass="button_my" text="Створити тест"></Button>
     </VBox>
 
     <Label fx:id="trainingClickCountLabel" visible="false" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />

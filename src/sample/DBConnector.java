@@ -4,15 +4,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import resource.Values;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.ArrayList;
 
 /**
@@ -29,6 +27,20 @@ public class DBConnector {
             URL url = new URL(request);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Accept-Charset", "utf-8");
+            conn.setRequestMethod("POST");
+            InputStream response = conn.getInputStream();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void addTest(String name, String description){
+        try {
+            description = URLEncoder.encode(description);
+            String request = DBConnector.url + "insert_in_Tests&name=" + name + "&description=" + description + "&creatorId=" + 1;
+            URL url = new URL(request);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Accept-Charset", "utf-8");
             InputStream response = conn.getInputStream();
         }catch (IOException ex){
             ex.printStackTrace();
@@ -36,9 +48,31 @@ public class DBConnector {
     }
 
     public static ArrayList<String[]> getQuestionsByTestId(int testId){
-        String[] keys = {"id", "testId", "imageName", "answers"};
+        String[] keys = {"questionId"};
         try {
-            return getData(new URL(DBConnector.url + "get_questions_data&testId=" + testId), keys);
+            return getData(new URL(DBConnector.url + "get_testQuestions_id&testId=" + testId), keys);
+        }catch (MalformedURLException ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void addTestQuestion(int testId, int questionId){
+        try {
+            String request = DBConnector.url + "insert_in_testQuestions&testId=" + testId + "&questionId=" + questionId;
+            URL url = new URL(request);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Accept-Charset", "utf-8");
+            InputStream response = conn.getInputStream();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static ArrayList<String[]> getQuestionsById(int id){
+        String[] keys = {"id", "target", "imageName", "answers"};
+        try {
+            return getData(new URL(DBConnector.url + "get_questions_byid&id=" + id), keys);
         }catch (MalformedURLException ex){
             ex.printStackTrace();
             return null;
@@ -46,7 +80,7 @@ public class DBConnector {
     }
 
     public static ArrayList<String[]> getQuestions(){
-        String[] keys = {"id", "testId", "imageName", "answers"};
+        String[] keys = {"id", "target", "imageName", "answers"};
         try {
             return getData(new URL(DBConnector.url + "get_questions_data"), keys);
         }catch (MalformedURLException ex){
@@ -66,7 +100,7 @@ public class DBConnector {
     }
 
     public static ArrayList<String[]> getUserById(int id){
-        String[] keys = {"id", "email", "admin", "password"};
+        String[] keys = {"id", "email", "password"};
         try {
             return getData(new URL(DBConnector.url + "get_user_byid&userId=" + id), keys);
         }catch (MalformedURLException ex){
@@ -76,7 +110,7 @@ public class DBConnector {
     }
 
     public static ArrayList<String[]> getUserByEmail(String email){
-        String[] keys = {"id", "email", "admin", "password", "confirm"};
+        String[] keys = {"id", "email", "password", "confirm"};
         try {
             return getData(new URL(DBConnector.url + "get_user_byemail&email=" + email), keys);
         }catch (MalformedURLException ex){
@@ -86,7 +120,7 @@ public class DBConnector {
     }
 
     public static ArrayList<String[]> getUsers(){
-        String[] keys = {"id", "email", "admin", "password"};
+        String[] keys = {"id", "email", "password"};
         try {
             return getData(new URL(DBConnector.url + "get_users_data"), keys);
         }catch (MalformedURLException ex){
