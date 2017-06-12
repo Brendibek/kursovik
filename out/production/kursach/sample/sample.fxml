@@ -251,11 +251,21 @@
 
 
     <AnchorPane fx:id="lineOfSightPane" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8" onKeyPressed="#lineOfSightKeyPerssed">
-        <Label fx:id="testLetter_Left" styleClass="letter_size" visible="false"/>
-        <Label fx:id="testLetter_Up" styleClass="letter_size" visible="false"/>
-        <Label fx:id="testLetter_Right" styleClass="letter_size" visible="false"/>
-        <Label fx:id="testLetter_Down" styleClass="letter_size" visible="false"/>
-        <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+        <Label fx:id="testLetter_Left" styleClass="letter_size" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8"  AnchorPane.topAnchor="8"/>
+        <Label fx:id="testLetter_Right" styleClass="letter_size" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8"/>
+        <HBox alignment="CENTER" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+            <Label fx:id="testLetter_Up" styleClass="letter_size" visible="false"/>
+        </HBox>
+        <HBox alignment="CENTER" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8">
+            <Label fx:id="testLetter_Down" styleClass="letter_size" visible="false"/>
+        </HBox>
+        <HBox alignment="CENTER" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+            <Circle fx:id="testCircle" fill="#0084ff" radius="7.0" stroke="BLACK" strokeType="INSIDE"/>
+        </HBox>
+
+        <HBox alignment="CENTER" AnchorPane.bottomAnchor="100"  AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8">
+            <Label fx:id="lineOfSightResult" visible="false" styleClass="message"/>
+        </HBox>
     </AnchorPane>
 
 

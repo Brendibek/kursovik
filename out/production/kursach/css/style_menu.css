@@ -26,3 +26,7 @@
 .letter_size{
     -fx-font-size: 66px;
 }
+
+.message{
+    -fx-font-size: 40px;
+}
