@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +23,26 @@ public class DBConnector {
 
     private static JSONParser parser = new JSONParser();
 
+    public static String genMD5(String value){
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(value.getBytes());
+            byte[] digest = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+
+            return sb.toString();
+        }catch (NoSuchAlgorithmException ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static void addUser(String email, String pass, String pass2){
         try {
-            String request = DBConnector.url + "sign_up&email=" + email + "&pass=" + pass + "&rpass=" + pass2;
+            String request = DBConnector.url + "sign_up&email=" + email + "&pass=" + genMD5(pass) + "&rpass=" + genMD5(pass2);
             URL url = new URL(request);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Accept-Charset", "utf-8");

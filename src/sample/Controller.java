@@ -132,8 +132,6 @@ public class Controller {
             if(email.contains("@") && email.contains(".") && !email.contains(",")){
                 if(pass.length()>=6){
                     if(pass.equals(pass2)){
-                        //md5
-
                         DBConnector.addUser(email, pass, pass2);
                         emailField.clear();
                         passwordField.clear();
@@ -154,7 +152,7 @@ public class Controller {
 
                 if(user[3].equals("1")) {
                     System.out.println(user[2]);
-                    if(user[2].equals(pass)){
+                    if(user[2].equals(DBConnector.genMD5(pass))){
                         Values.user = new User(Integer.parseInt(user[0]), email, pass);
                         userEmail.setText(email);
                         userEmail.setVisible(true);
@@ -425,8 +423,14 @@ public class Controller {
             trainingImage.setLayoutY(posY);
             timerr = System.currentTimeMillis();
 
-            if(who.equals("pc")) trainingImagePcCount++;
-            else trainingImageClickCount++;
+            if(who.equals("pc")) {
+                trainingImagePcCount++;
+                trainingImage.setImage(new Image("image/no.png"));
+            }
+            else {
+                trainingImageClickCount++;
+                trainingImage.setImage(new Image("image/yes.png"));
+            }
 
             Platform.runLater(() -> trainingClickCountLabel.setText("Кількість натиснень: " + trainingImageClickCount + " Кількість пропусків: " + trainingImagePcCount));
         }
