@@ -21,6 +21,14 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <HBox alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="400" AnchorPane.bottomAnchor="120">
+        <ImageView fx:id="menuImage">
+            <image>
+                <Image url="@../image/eye.png" />
+            </image>
+        </ImageView>
+    </HBox>
+
     <VBox fx:id="menu" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <Button visible="false" fx:id="editorBtn" focusTraversable="false" onAction="#showEditor" prefHeight="40" prefWidth="300" styleClass="button_my" text="Редактор">
             <VBox.margin>

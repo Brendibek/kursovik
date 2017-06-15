@@ -27,6 +27,8 @@ public class Controller {
 
     public VBox menu;
 
+    public ImageView menuImage;
+
     public Button editorBtn;
     public Button daltonBtn;
     public Button colorBtn;
@@ -177,6 +179,8 @@ public class Controller {
     private void showSignForm(){
         signForm.setVisible(true);
         menu.setVisible(false);
+        daltonTestMenu.setVisible(false);
+        colorTestMenu.setVisible(false);
         userPane.setVisible(false);
         backToMenuBtn.setVisible(true);
     }
@@ -231,6 +235,7 @@ public class Controller {
 
     public void showDaltonTestSettings(){
         menu.setVisible(false);
+        menuImage.setVisible(false);
         daltonTestsPane.getChildren().clear();
         ids.clear();
         testBoxes.clear();
@@ -268,6 +273,7 @@ public class Controller {
 
     public void hideDaltonTestSettings(){
         menu.setVisible(true);
+        menuImage.setVisible(true);
         daltonTestMenu.setVisible(false);
     }
 
@@ -308,11 +314,13 @@ public class Controller {
 
     public void showColorTestSettings(){
         menu.setVisible(false);
+        menuImage.setVisible(false);
         colorTestMenu.setVisible(true);
     }
 
     public void hideColorTestSettings(){
         menu.setVisible(true);
+        menuImage.setVisible(true);
         colorTestMenu.setVisible(false);
     }
 
@@ -584,12 +592,14 @@ public class Controller {
             menu.setVisible(false);
             userPane.setVisible(false);
             backToMenuBtn.setVisible(true);
+            menuImage.setVisible(false);
         }
     }
 
     public void backToMenu(){
         Values.stage.setFullScreen(false);
         menu.setVisible(true);
+        menuImage.setVisible(true);
         userPane.setVisible(true);
         backToMenuBtn.setVisible(false);
         userPane.setVisible(true);
