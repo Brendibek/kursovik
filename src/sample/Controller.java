@@ -186,29 +186,31 @@ public class Controller {
     }
 
     public void startDaltonTest(){
-        fullScreenSwitch();
-        daltonTestMenu.setVisible(false);
+        if(daltonTestCountSlider.getValue()!=0) {
+            fullScreenSwitch();
+            daltonTestMenu.setVisible(false);
 
-        if(randomTestBtn.isSelected()){
-            daltonTestQuestions = DBConnector.getQuestions();
-        }else{
-            for(int i = 0; i < daltonTestsPane.getChildren().size();i++){
-                HBox hBox = (HBox) daltonTestsPane.getChildren().get(i);
-                RadioButton radioButton = (RadioButton) hBox.getChildren().get(0);
-                if(radioButton.isSelected()){
-                    ArrayList<String[]> questions = DBConnector.getQuestionsByTestId(ids.get(i));
-                    daltonTestQuestions = new ArrayList<>();
-                    for(int j = 0; j<questions.size(); j++){
-                        daltonTestQuestions.addAll(DBConnector.getQuestionsById(Integer.parseInt(questions.get(j)[0])));
+            if (randomTestBtn.isSelected()) {
+                daltonTestQuestions = DBConnector.getQuestions();
+            } else {
+                for (int i = 0; i < daltonTestsPane.getChildren().size(); i++) {
+                    HBox hBox = (HBox) daltonTestsPane.getChildren().get(i);
+                    RadioButton radioButton = (RadioButton) hBox.getChildren().get(0);
+                    if (radioButton.isSelected()) {
+                        ArrayList<String[]> questions = DBConnector.getQuestionsByTestId(ids.get(i));
+                        daltonTestQuestions = new ArrayList<>();
+                        for (int j = 0; j < questions.size(); j++) {
+                            daltonTestQuestions.addAll(DBConnector.getQuestionsById(Integer.parseInt(questions.get(j)[0])));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
+
+            daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
+
+            daltonTestQuestionForm.setVisible(true);
         }
-
-        daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
-
-        daltonTestQuestionForm.setVisible(true);
     }
 
 
@@ -226,7 +228,7 @@ public class Controller {
             daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
         }catch (IndexOutOfBoundsException ex){
             daltonTestResult.setVisible(true);
-            daltonTestResultLabel.setText(Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
+            daltonTestResultLabel.setText(Math.round(100/daltonTestCountSlider.getValue()  * daltonTestCorrectAnswers) + "%");
             daltonTestEnd();
         }catch (NumberFormatException ex){
             //empty field
