@@ -113,7 +113,7 @@
             </VBox>
         </ScrollPane>
 
-        <Button fx:id="startDaltonTestBtn" onAction="#startDaltonTest" prefHeight="40" prefWidth="170" styleClass="button_my" text="Почати тест ">
+        <Button fx:id="startDaltonTestBtn" onAction="#startDaltonTest" prefHeight="40" prefWidth="170" styleClass="button_my" text="Почати тест">
             <VBox.margin>
                 <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>

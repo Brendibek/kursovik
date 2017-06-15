@@ -199,7 +199,9 @@ public class Controller {
                     if (radioButton.isSelected()) {
                         ArrayList<String[]> questions = DBConnector.getQuestionsByTestId(ids.get(i));
                         daltonTestQuestions = new ArrayList<>();
-                        for (int j = 0; j < questions.size(); j++) {
+
+                        if(daltonTestCountSlider.getValue()>questions.size()) daltonTestCountSlider.setValue(questions.size());
+                        for (int j = 0; j < daltonTestCountSlider.getValue(); j++) {
                             daltonTestQuestions.addAll(DBConnector.getQuestionsById(Integer.parseInt(questions.get(j)[0])));
                         }
                         break;
@@ -245,7 +247,7 @@ public class Controller {
         ArrayList<String[]> tests = DBConnector.getTests();
         for(int i = 0; i<tests.size();i++){
             ids.add(Integer.parseInt(tests.get(i)[0]));
-            HBox hBox = createTestBox(tests.get(i)[1], tests.get(i)[2], DBConnector.getUserById(Integer.parseInt(tests.get(i)[3])).get(0)[1]);
+            HBox hBox = createTestBox(i, tests.get(i)[1], tests.get(i)[2], DBConnector.getUserById(Integer.parseInt(tests.get(i)[3])).get(0)[1]);
             testBoxes.add(hBox);
             daltonTestsPane.getChildren().add(hBox);
         }
@@ -253,11 +255,12 @@ public class Controller {
         daltonTestMenu.setVisible(true);
     }
 
-    public HBox createTestBox(String name, String description, String creator){
+    public HBox createTestBox(int num, String name, String description, String creator){
         HBox pane = new HBox();
         RadioButton radioButton = new RadioButton();
         radioButton.setToggleGroup(testVariant);
         pane.getChildren().add(radioButton);
+        if(num==0) radioButton.setSelected(true);
 
         VBox vbox = new VBox();
         Label nameLabel = new Label(name);
