@@ -71,6 +71,7 @@ public class Controller {
     public VBox colorTestQuestionForm;
     public VBox colorTestResult;
     public Slider colorTestCountSlider;
+    public Slider colorTestSlider;
     public Rectangle colorTestV1, colorTestV2, colorTestV3, colorTestV4;
     public RadioButton colorTestV1Radio, colorTestV2Radio, colorTestV3Radio, colorTestV4Radio;
     private int colorTestCorrectAnswers = 0, colorTestQuestionNum = 0;
@@ -356,9 +357,28 @@ public class Controller {
 
     public void startColorTest(){
         if(colorTestCountSlider.getValue()!=0){
-            for(int i = 0; i < colorTestCountSlider.getValue(); i++){
-                int[] temp = {random.nextInt(235), random.nextInt(235), random.nextInt(235), random.nextInt(4)};
-                colorTestQuestions.add(temp);
+            if(colorCheck.isSelected()){
+                Color color = colorPicker.getValue();
+                for(int i = 0; i < colorTestCountSlider.getValue(); i++){
+                    int rgb[] = new int[3];
+
+                    rgb[0] = (int)(256 * color.getRed() + (random.nextInt(40) - 20));
+                    rgb[1] = (int)(256 * color.getGreen() + (random.nextInt(40) - 20));
+                    rgb[2] = (int)(256 * color.getBlue() + (random.nextInt(40) - 20));
+
+                    for(int j = 0; j<rgb.length; j++) {
+                        if (rgb[j] < 0)
+                            rgb[j] = 0;
+                    }
+
+                    int[] temp = {rgb[0], rgb[1], rgb[2], random.nextInt(4)};
+                    colorTestQuestions.add(temp);
+                }
+            }else{
+                for(int i = 0; i < colorTestCountSlider.getValue(); i++){
+                    int[] temp = {random.nextInt(255), random.nextInt(255), random.nextInt(255), random.nextInt(4)};
+                    colorTestQuestions.add(temp);
+                }
             }
 
             int[] temp = colorTestQuestions.get(colorTestQuestionNum);
@@ -399,8 +419,16 @@ public class Controller {
         colorTestQuestions.clear();
     }
 
+    private int k = 15;
     private void colorTestDraw(int R, int G, int B, int answer){
-        int k = 15;
+        int k = (int)(25 - colorTestSlider.getValue());
+        if(R + k > 255)
+            R = 255-k;
+        if(G + k > 255)
+            G = 255-k;
+        if(B + k > 255)
+            B = 255-k;
+
         if(answer == 0)
             colorTestV1.setFill(Color.rgb(R + k, G + k, B + k));
         else
