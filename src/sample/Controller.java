@@ -29,6 +29,7 @@ public class Controller {
 
     public ImageView menuImage;
 
+    public Button fontSizeBtn;
     public Button editorBtn;
     public Button daltonBtn;
     public Button colorBtn;
@@ -36,6 +37,13 @@ public class Controller {
     public Button exitBtn;
 
     public Button backToMenuBtn;
+    public Button lineOfSightBtn;
+    public Button daltonTestSubmitBtn;
+    public Button daltonTestResultAccept;
+    public Button colorTestSubmitBtn;
+    public Button colorTestResultAccept;
+    public Button signUpBtn;
+    public Button editorSubmitBtn;
 
     public VBox daltonTestMenu;
     public Slider daltonTestCountSlider;
@@ -172,7 +180,6 @@ public class Controller {
             }catch (NullPointerException ex){
                 System.out.println("no user");
             }
-
         }
     }
 
@@ -617,5 +624,135 @@ public class Controller {
 
         daltonTestResult.setVisible(false);
         daltonTestEnd();
+    }
+
+    public void fontSize(){
+        if(fontSizeBtn.getStyleClass().indexOf("fontSizeMid") != -1){
+            fontSizeBtn.getStyleClass().remove("fontSizeMid");
+            fontSizeBtn.getStyleClass().add("fontSizeMax");
+
+            editorBtn.getStyleClass().remove("fontSizeMin");
+            editorBtn.getStyleClass().add("fontSizeMid");
+            daltonBtn.getStyleClass().remove("fontSizeMin");
+            daltonBtn.getStyleClass().add("fontSizeMid");
+            colorBtn.getStyleClass().remove("fontSizeMin");
+            colorBtn.getStyleClass().add("fontSizeMid");
+            trainingBtn.getStyleClass().remove("fontSizeMin");
+            trainingBtn.getStyleClass().add("fontSizeMid");
+            lineOfSightBtn.getStyleClass().remove("fontSizeMin");
+            lineOfSightBtn.getStyleClass().add("fontSizeMid");
+            exitBtn.getStyleClass().remove("fontSizeMin");
+            exitBtn.getStyleClass().add("fontSizeMid");
+            backToMenuBtn.getStyleClass().remove("fontSizeMin");
+            backToMenuBtn.getStyleClass().add("fontSizeMid");
+            daltonTestBackToMenu.getStyleClass().remove("fontSizeMin");
+            daltonTestBackToMenu.getStyleClass().add("fontSizeMid");
+            startDaltonTestBtn.getStyleClass().remove("fontSizeMin");
+            startDaltonTestBtn.getStyleClass().add("fontSizeMid");
+            daltonTestSubmitBtn.getStyleClass().remove("fontSizeMin");
+            daltonTestSubmitBtn.getStyleClass().add("fontSizeMid");
+            daltonTestResultAccept.getStyleClass().remove("fontSizeMin");
+            daltonTestResultAccept.getStyleClass().add("fontSizeMid");
+            colorTestBackToMenu.getStyleClass().remove("fontSizeMin");
+            colorTestBackToMenu.getStyleClass().add("fontSizeMid");
+            startColorTestBtn.getStyleClass().remove("fontSizeMin");
+            startColorTestBtn.getStyleClass().add("fontSizeMid");
+            colorTestSubmitBtn.getStyleClass().remove("fontSizeMin");
+            colorTestSubmitBtn.getStyleClass().add("fontSizeMid");
+            colorTestResultAccept.getStyleClass().remove("fontSizeMin");
+            colorTestResultAccept.getStyleClass().add("fontSizeMid");
+            signInBtn.getStyleClass().remove("fontSizeMin");
+            signInBtn.getStyleClass().add("fontSizeMid");
+            signUpBtn.getStyleClass().remove("fontSizeMin");
+            signUpBtn.getStyleClass().add("fontSizeMid");
+            signSubmitBtn.getStyleClass().remove("fontSizeMin");
+            signSubmitBtn.getStyleClass().add("fontSizeMid");
+            editorSubmitBtn.getStyleClass().remove("fontSizeMin");
+            editorSubmitBtn.getStyleClass().add("fontSizeMid");
+        }else if(fontSizeBtn.getStyleClass().indexOf("fontSizeMax") != -1){
+            fontSizeBtn.getStyleClass().remove("fontSizeMax");
+            fontSizeBtn.getStyleClass().add("fontSizeMin");
+
+            editorBtn.getStyleClass().remove("fontSizeMid");
+            editorBtn.getStyleClass().add("fontSizeMax");
+            daltonBtn.getStyleClass().remove("fontSizeMid");
+            daltonBtn.getStyleClass().add("fontSizeMax");
+            colorBtn.getStyleClass().remove("fontSizeMid");
+            colorBtn.getStyleClass().add("fontSizeMax");
+            trainingBtn.getStyleClass().remove("fontSizeMid");
+            trainingBtn.getStyleClass().add("fontSizeMax");
+            lineOfSightBtn.getStyleClass().remove("fontSizeMid");
+            lineOfSightBtn.getStyleClass().add("fontSizeMax");
+            exitBtn.getStyleClass().remove("fontSizeMid");
+            exitBtn.getStyleClass().add("fontSizeMax");
+            backToMenuBtn.getStyleClass().remove("fontSizeMid");
+            backToMenuBtn.getStyleClass().add("fontSizeMax");
+            daltonTestBackToMenu.getStyleClass().remove("fontSizeMid");
+            daltonTestBackToMenu.getStyleClass().add("fontSizeMax");
+            startDaltonTestBtn.getStyleClass().remove("fontSizeMid");
+            startDaltonTestBtn.getStyleClass().add("fontSizeMax");
+            daltonTestSubmitBtn.getStyleClass().remove("fontSizeMid");
+            daltonTestSubmitBtn.getStyleClass().add("fontSizeMax");
+            daltonTestResultAccept.getStyleClass().remove("fontSizeMid");
+            daltonTestResultAccept.getStyleClass().add("fontSizeMax");
+            colorTestBackToMenu.getStyleClass().remove("fontSizeMid");
+            colorTestBackToMenu.getStyleClass().add("fontSizeMax");
+            startColorTestBtn.getStyleClass().remove("fontSizeMid");
+            startColorTestBtn.getStyleClass().add("fontSizeMax");
+            colorTestSubmitBtn.getStyleClass().remove("fontSizeMid");
+            colorTestSubmitBtn.getStyleClass().add("fontSizeMax");
+            colorTestResultAccept.getStyleClass().remove("fontSizeMid");
+            colorTestResultAccept.getStyleClass().add("fontSizeMax");
+            signInBtn.getStyleClass().remove("fontSizeMid");
+            signInBtn.getStyleClass().add("fontSizeMax");
+            signUpBtn.getStyleClass().remove("fontSizeMid");
+            signUpBtn.getStyleClass().add("fontSizeMax");
+            signSubmitBtn.getStyleClass().remove("fontSizeMid");
+            signSubmitBtn.getStyleClass().add("fontSizeMax");
+            editorSubmitBtn.getStyleClass().remove("fontSizeMid");
+            editorSubmitBtn.getStyleClass().add("fontSizeMax");
+        }else if(fontSizeBtn.getStyleClass().indexOf("fontSizeMin") != -1){
+            fontSizeBtn.getStyleClass().remove("fontSizeMin");
+            fontSizeBtn.getStyleClass().add("fontSizeMid");
+
+            editorBtn.getStyleClass().remove("fontSizeMax");
+            editorBtn.getStyleClass().add("fontSizeMin");
+            daltonBtn.getStyleClass().remove("fontSizeMax");
+            daltonBtn.getStyleClass().add("fontSizeMin");
+            colorBtn.getStyleClass().remove("fontSizeMax");
+            colorBtn.getStyleClass().add("fontSizeMin");
+            trainingBtn.getStyleClass().remove("fontSizeMax");
+            trainingBtn.getStyleClass().add("fontSizeMin");
+            lineOfSightBtn.getStyleClass().remove("fontSizeMax");
+            lineOfSightBtn.getStyleClass().add("fontSizeMin");
+            exitBtn.getStyleClass().remove("fontSizeMax");
+            exitBtn.getStyleClass().add("fontSizeMin");
+            backToMenuBtn.getStyleClass().remove("fontSizeMax");
+            backToMenuBtn.getStyleClass().add("fontSizeMin");
+            daltonTestBackToMenu.getStyleClass().remove("fontSizeMax");
+            daltonTestBackToMenu.getStyleClass().add("fontSizeMin");
+            startDaltonTestBtn.getStyleClass().remove("fontSizeMax");
+            startDaltonTestBtn.getStyleClass().add("fontSizeMin");
+            daltonTestSubmitBtn.getStyleClass().remove("fontSizeMax");
+            daltonTestSubmitBtn.getStyleClass().add("fontSizeMin");
+            daltonTestResultAccept.getStyleClass().remove("fontSizeMax");
+            daltonTestResultAccept.getStyleClass().add("fontSizeMin");
+            colorTestBackToMenu.getStyleClass().remove("fontSizeMax");
+            colorTestBackToMenu.getStyleClass().add("fontSizeMin");
+            startColorTestBtn.getStyleClass().remove("fontSizeMax");
+            startColorTestBtn.getStyleClass().add("fontSizeMin");
+            colorTestSubmitBtn.getStyleClass().remove("fontSizeMax");
+            colorTestSubmitBtn.getStyleClass().add("fontSizeMin");
+            colorTestResultAccept.getStyleClass().remove("fontSizeMax");
+            colorTestResultAccept.getStyleClass().add("fontSizeMin");
+            signInBtn.getStyleClass().remove("fontSizeMax");
+            signInBtn.getStyleClass().add("fontSizeMin");
+            signUpBtn.getStyleClass().remove("fontSizeMax");
+            signUpBtn.getStyleClass().add("fontSizeMin");
+            signSubmitBtn.getStyleClass().remove("fontSizeMax");
+            signSubmitBtn.getStyleClass().add("fontSizeMin");
+            editorSubmitBtn.getStyleClass().remove("fontSizeMax");
+            editorSubmitBtn.getStyleClass().add("fontSizeMin");
+        }
     }
 }
