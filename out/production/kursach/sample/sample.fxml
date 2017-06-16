@@ -20,7 +20,8 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<AnchorPane prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<?import javafx.scene.control.Spinner?>
+<AnchorPane fx:id="rootPane" prefHeight="600" prefWidth="900" stylesheets="@../css/style_menu.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <HBox alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="400" AnchorPane.bottomAnchor="120">
         <ImageView fx:id="menuImage">
             <image>
@@ -29,7 +30,7 @@
         </ImageView>
     </HBox>
 
-    <Button fx:id="fontSizeBtn" AnchorPane.topAnchor="5.0" AnchorPane.rightAnchor="5.0" focusTraversable="false" onAction="#fontSize" prefHeight="32" prefWidth="32" styleClass="button_my, fontSizeMid" text="а"/>
+    <Spinner fx:id="sizeSpinner" min="6" minWidth="60" maxWidth="100" max="12" initialValue="8" AnchorPane.topAnchor="5.0" AnchorPane.rightAnchor="5.0" focusTraversable="false" onMouseClicked="#fontSize"/>
 
     <VBox fx:id="menu" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <Button visible="false" fx:id="editorBtn" focusTraversable="false" onAction="#showEditor" prefHeight="40" prefWidth="300" styleClass="button_my, fontSizeMin" text="Редактор">
@@ -183,6 +184,18 @@
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Slider>
+
+        <CheckBox fx:id="colorCheck" text="Вибрати колір">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </CheckBox>
+
+        <ColorPicker fx:id="colorPicker" visible="${colorCheck.selected}">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </ColorPicker>
 
         <Button fx:id="startColorTestBtn" onAction="#startColorTest" prefHeight="40" prefWidth="170" styleClass="button_my, fontSizeMin" text="Почати тест ">
             <VBox.margin>
