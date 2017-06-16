@@ -23,67 +23,74 @@ import java.util.*;
 import java.util.Timer;
 
 public class Controller {
-    private JSONParser jsonParser = new JSONParser();
-
     public VBox menu;
-
     public ImageView menuImage;
-
-    public Button fontSizeBtn;
-    public Button editorBtn;
-    public Button daltonBtn;
-    public Button colorBtn;
-    public Button trainingBtn;
-    public Button exitBtn;
-
     public Button backToMenuBtn;
-    public Button lineOfSightBtn;
+    public Button exitBtn;
+    public VBox userPane;
+
+    //editor start
+    public Button editorSubmitBtn;
+    //editor end
+
+    //daltonTest start
+    public Button daltonBtn;
     public Button daltonTestSubmitBtn;
     public Button daltonTestResultAccept;
-    public Button colorTestSubmitBtn;
-    public Button colorTestResultAccept;
-    public Button signUpBtn;
-    public Button editorSubmitBtn;
-
-    public VBox daltonTestMenu;
-    public Slider daltonTestCountSlider;
     public Button startDaltonTestBtn;
     public Button daltonTestBackToMenu;
-
-    private ArrayList<String[]> daltonTestQuestions = new ArrayList<>();
+    public VBox daltonTestMenu;
     public VBox daltonTestQuestionForm;
+    public VBox daltonAnswers;
+    public VBox daltonTestResult;
+    public VBox daltonTestsPane;
+    public Slider daltonTestCountSlider;
+    private JSONParser jsonParser = new JSONParser();
     public ImageView daltonImage;
     public Label daltonQuestion;
-    public VBox daltonAnswers;
+    public Label daltonTestResultLabel;
     public TextField daltonAnswer;
     public RadioButton daltonTestV1Radio, daltonTestV2Radio, daltonTestV3Radio, daltonTestV4Radio;
-    private int daltonCurrentCorrectAnswer = -1, daltonTestCorrectAnswers = 0, daltonTestQuestionNum = 0;
-    public VBox daltonTestResult;
-    public Label daltonTestResultLabel;
     public RadioButton randomTestBtn;
-    public ToggleGroup testVariant;
-    public VBox daltonTestsPane;
+    private int daltonCurrentCorrectAnswer = -1, daltonTestCorrectAnswers = 0, daltonTestQuestionNum = 0;
+    private ArrayList<String[]> daltonTestQuestions = new ArrayList<>();
     private ArrayList<Integer> ids = new ArrayList<>();
     private ArrayList<HBox> testBoxes = new ArrayList<>();
+    public ToggleGroup testVariant;
+    //daltonTest end
 
-    public VBox colorTestMenu;
-    public Slider colorTestCountSlider;
-    public Button startColorTestBtn;
+    //colorTest start
+    public Button colorBtn;
+    public Button colorTestSubmitBtn;
+    public Button colorTestResultAccept;
     public Button colorTestBackToMenu;
-    public CheckBox colorCheck;
-    public ColorPicker colorPicker;
-
+    public Button startColorTestBtn;
+    public VBox colorTestMenu;
     public VBox colorTestQuestionForm;
+    public VBox colorTestResult;
+    public Slider colorTestCountSlider;
     public Rectangle colorTestV1, colorTestV2, colorTestV3, colorTestV4;
     public RadioButton colorTestV1Radio, colorTestV2Radio, colorTestV3Radio, colorTestV4Radio;
     private int colorTestCorrectAnswers = 0, colorTestQuestionNum = 0;
-    private ArrayList<int[]> colorTestQuestions = new ArrayList<>();
-    public VBox colorTestResult;
     public Label colorTestResultLabel;
+    private ArrayList<int[]> colorTestQuestions = new ArrayList<>();
+    public CheckBox colorCheck;
+    public ColorPicker colorPicker;
+    //colorTest end
 
+    //fontSize start
+    public Button fontSizeBtn;
+    //fontSize end
+
+    //training start
+    public Button trainingBtn;
     public ImageView trainingImage;
     public Label trainingClickCountLabel;
+    private int trainingImageClickCount, trainingImagePcCount;
+    //training end
 
+    //lineOfSight start
+    public Button lineOfSightBtn;
     public Label testLetter_Left;
     public Label testLetter_Up;
     public Label testLetter_Right;
@@ -92,22 +99,24 @@ public class Controller {
     public AnchorPane lineOfSightPane;
     private int lineOfSightErrCount = 0;
     public Label lineOfSightResult;
+    //lineOfSight end
 
-    private int trainingImageClickCount, trainingImagePcCount;
+    //authorization start
+    public Button editorBtn;
+    public Button signUpBtn;
+    public Button signInBtn;
+    public Button signSubmitBtn;
+    public VBox signForm;
+    public Label userEmail;
+    public TextField emailField;
+    public PasswordField passwordField;
+    public PasswordField passwordField2;
+    //authorization end
+
 
     private Random random = new Random();
 
-    public VBox userPane;
-    public Label userEmail;
-    public Button signInBtn;
-
-    public VBox signForm;
-    public TextField emailField;
     public TextArea testDescriptionField;
-    public PasswordField passwordField;
-    public PasswordField passwordField2;
-    public Button signSubmitBtn;
-
     public VBox editorPane;
     public TextField testNameField;
     public VBox editorQuestionsPane;
@@ -262,6 +271,8 @@ public class Controller {
         daltonTestMenu.setVisible(true);
     }
 
+
+    //dalton test start
     public HBox createTestBox(int num, String name, String description, String creator){
         HBox pane = new HBox();
         RadioButton radioButton = new RadioButton();
@@ -323,7 +334,9 @@ public class Controller {
             ex.printStackTrace();
         }
     }
+    //dalton test end
 
+    //color test start
     public void showColorTestSettings(){
         menu.setVisible(false);
         menuImage.setVisible(false);
@@ -403,6 +416,8 @@ public class Controller {
         else
             colorTestV4.setFill(Color.rgb(R, G, B));
     }
+    //color test end
+
 
     private long timerr = System.currentTimeMillis();
     public void startTraining(){
@@ -592,10 +607,6 @@ public class Controller {
         }
     }
 
-    public void exit(){
-        System.exit(0);
-    }
-
     public void fullScreenSwitch(){
         if(Values.stage.isFullScreen()){
             backToMenu();
@@ -754,5 +765,9 @@ public class Controller {
             editorSubmitBtn.getStyleClass().remove("fontSizeMax");
             editorSubmitBtn.getStyleClass().add("fontSizeMin");
         }
+    }
+
+    public void exit(){
+        System.exit(0);
     }
 }
