@@ -290,12 +290,12 @@ public class Controller {
         Label nameLabel = new Label(name);
         vbox.getChildren().add(nameLabel);
         Label descLabel = new Label(description);
+        descLabel.setWrapText(true);
         vbox.getChildren().add(descLabel);
         Label creatorLabel = new Label(creator);
         vbox.getChildren().add(creatorLabel);
 
         pane.getChildren().add(vbox);
-
         return pane;
     }
 
@@ -614,8 +614,10 @@ public class Controller {
     private HBox createQuestion(Image image, String text){
         CheckBox checkBox = new CheckBox();
         ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(250);
+        imageView.setFitHeight(250);
         Label textLabel = new Label(text);
-
+        textLabel.setWrapText(true);
         HBox hBox = new HBox();
         hBox.getChildren().add(checkBox);
         hBox.getChildren().add(imageView);

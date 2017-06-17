@@ -104,13 +104,13 @@
             </VBox.margin>
         </Label>
 
-        <Slider fx:id="daltonTestCountSlider" blockIncrement="5" majorTickUnit="5" max="50" min="0" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+        <Slider fx:id="daltonTestCountSlider" blockIncrement="5" majorTickUnit="5" max="50" min="0" value="3" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </Slider>
 
-        <ScrollPane>
+        <ScrollPane fitToWidth="true">
             <VBox fx:id="daltonTestsPane">
 
             </VBox>
@@ -128,19 +128,42 @@
         <HBox alignment="CENTER">
             <ImageView fx:id="daltonImage" />
         </HBox>
-        <Label fx:id="daltonQuestion" />
+        <Label fx:id="daltonQuestion" text = "Що ви бачите на сображенні?" >
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Label>
 
-        <TextField fx:id="daltonAnswer" visible="false" />
+        <TextField fx:id="daltonAnswer" visible="false">
+            <VBox.margin>
+                <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </TextField>
 
         <VBox fx:id="daltonAnswers" alignment="CENTER" visible="false">
             <RadioButton fx:id="daltonTestV1Radio">
                 <toggleGroup>
                    <ToggleGroup fx:id="daltonVariant" />
                 </toggleGroup>
+                <VBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="daltonTestV2Radio" toggleGroup="$daltonVariant" />
-            <RadioButton fx:id="daltonTestV3Radio" toggleGroup="$daltonVariant" />
-            <RadioButton fx:id="daltonTestV4Radio" toggleGroup="$daltonVariant" />
+            <RadioButton fx:id="daltonTestV2Radio" toggleGroup="$daltonVariant">
+                <VBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </VBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="daltonTestV3Radio" toggleGroup="$daltonVariant">
+                <VBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </VBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="daltonTestV4Radio" toggleGroup="$daltonVariant">
+                <VBox.margin>
+                    <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
+                </VBox.margin>
+            </RadioButton>
         </VBox>
 
         <HBox alignment="CENTER">
@@ -179,7 +202,19 @@
             </VBox.margin>
         </Label>
 
-        <Slider fx:id="colorTestCountSlider" blockIncrement="5" majorTickUnit="5" max="50" min="0" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+        <Slider fx:id="colorTestCountSlider" blockIncrement="5" majorTickUnit="5" max="50" min="0" value="5" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+            <VBox.margin>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </VBox.margin>
+        </Slider>
+
+        <Label text="Складність тесту">
+            <VBox.margin>
+                <Insets left="3.0" right="3.0" top="3.0" bottom="3" />
+            </VBox.margin>
+        </Label>
+
+        <Slider fx:id="colorTestSlider" blockIncrement="5" majorTickUnit="5" max="10" min="1" value="3" minorTickCount="4" orientation="HORIZONTAL" prefHeight="40" showTickLabels="true" showTickMarks="true" snapToTicks="true">
             <VBox.margin>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
@@ -205,6 +240,7 @@
     </VBox>
 
     <VBox fx:id="colorTestQuestionForm" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
+        <Label text="Оберіть квадрат, коір якого відрізняється"/>
         <HBox alignment="CENTER">
             <Rectangle fx:id="colorTestV1" height="300" width="300">
                 <HBox.margin>
@@ -329,17 +365,17 @@
     </VBox>
 
     <VBox fx:id="signForm" alignment="CENTER" visible="false" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
-        <TextField fx:id="emailField"  maxWidth="400">
+        <TextField fx:id="emailField"  maxWidth="400" promptText="Email">
             <VBox.margin>
                 <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </TextField>
-        <PasswordField fx:id="passwordField" maxWidth="400">
+        <PasswordField fx:id="passwordField" maxWidth="400" promptText="Password">
             <VBox.margin>
                 <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
         </PasswordField>
-        <PasswordField fx:id="passwordField2" visible="false" maxWidth="400">
+        <PasswordField fx:id="passwordField2" visible="false" maxWidth="400" promptText="Repeat password">
             <VBox.margin>
                 <Insets bottom="3" left="3.0" right="3.0" top="3.0" />
             </VBox.margin>
@@ -354,7 +390,7 @@
     <VBox visible="false" fx:id="editorPane" AnchorPane.bottomAnchor="48" AnchorPane.leftAnchor="8" AnchorPane.rightAnchor="8" AnchorPane.topAnchor="8">
         <TextField fx:id="testNameField"></TextField>
         <TextArea fx:id="testDescriptionField" ></TextArea>
-        <ScrollPane>
+        <ScrollPane fitToWidth="true">
             <VBox fx:id="editorQuestionsPane"></VBox>
         </ScrollPane>
         <Button fx:id="editorSubmitBtn" onAction="#saveTest" prefHeight="40" styleClass="button_my, fontSizeMin" text="Створити тест"></Button>
