@@ -154,7 +154,11 @@ public class DBConnector {
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String data = reader.readLine();
 
-            data = data.substring(1);//костыль
+            //костыль
+            while(true){
+                if(data.charAt(0)!='[') data = data.substring(1);
+                else break;
+            }
 
             reader.close();
 
