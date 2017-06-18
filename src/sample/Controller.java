@@ -161,7 +161,7 @@ public class Controller {
                         emailField.clear();
                         passwordField.clear();
                         passwordField2.clear();
-
+                        backToMenu();
                     }else{
                         //разные пароли
                     }
@@ -185,6 +185,7 @@ public class Controller {
 
                         editorBtn.setVisible(true);
 
+                        backToMenu();
                         System.out.println("success");
                     }else{
                         System.out.println("wrong password");
@@ -252,7 +253,7 @@ public class Controller {
             daltonQuestionInit(daltonTestQuestions.get(daltonTestQuestionNum));
         }catch (IndexOutOfBoundsException ex){
             daltonTestResult.setVisible(true);
-            daltonTestResultLabel.setText(Math.round(100/daltonTestCountSlider.getValue()  * daltonTestCorrectAnswers) + "%");
+            daltonTestResultLabel.setText("Правильні відповіді: " + Math.round(100/daltonTestCountSlider.getValue()  * daltonTestCorrectAnswers) + "%");
             daltonTestEnd();
         }catch (NumberFormatException ex){
             //empty field
@@ -403,7 +404,7 @@ public class Controller {
             colorTestDraw(temp[0], temp[1], temp[2], temp[3]);
         }catch (IndexOutOfBoundsException ex){
             colorTestResult.setVisible(true);
-            colorTestResultLabel.setText(Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
+            colorTestResultLabel.setText("Правильні відповіді: " + Math.round(100/colorTestCountSlider.getValue() * colorTestCorrectAnswers) + "%");
             colorTestEnd();
         }
         colorTestV1Radio.setSelected(false);
@@ -651,6 +652,7 @@ public class Controller {
             userPane.setVisible(false);
             backToMenuBtn.setVisible(true);
             menuImage.setVisible(false);
+            sizeSpinner.requestFocus();
         }
     }
 
